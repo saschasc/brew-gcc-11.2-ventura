@@ -11,6 +11,7 @@ diff --color -pur gcc-11.2.0/gcc/config/darwin-driver.c gcc-11.2.0-patched/gcc/c
 
    /* Skip a separating period, if there's one.  */
 diff --color -pur gcc-11.2.0/gcc/config.gcc gcc-11.2.0-patched/gcc/config.gcc
+
 --- gcc-11.2.0/gcc/config.gcc   2021-07-28 08:55:07
 +++ gcc-11.2.0-patched/gcc/config.gcc   2023-05-25 22:06:47
 @@ -702,9 +702,9 @@ case ${target} in
