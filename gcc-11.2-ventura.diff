@@ -1,0 +1,45 @@
+diff -pur gcc-11.2.0/gcc/config/darwin-driver.c gcc-11.2.0-patched/gcc/config/darwin-driver.c
+--- gcc-11.2.0/gcc/config/darwin-driver.c	2021-07-28 08:55:07
++++ gcc-11.2.0-patched/gcc/config/darwin-driver.c	2023-05-26 13:22:26
+@@ -64,7 +64,7 @@ validate_macosx_version_min (const char *version_str)
+ 
+   major = strtoul (version_str, &end, 10);
+ 
+-  if (major < 10 || major > 11 ) /* MacOS 10 and 11 are known. */
++  if (major < 10 || major > 13 ) /* MacOS 10, 11, 12 and 13 are known. */
+     return NULL;
+ 
+   /* Skip a separating period, if there's one.  */
+diff -pur gcc-11.2.0/gcc/config.gcc gcc-11.2.0-patched/gcc/config.gcc
+--- gcc-11.2.0/gcc/config.gcc	2021-07-28 08:55:07
++++ gcc-11.2.0-patched/gcc/config.gcc	2023-05-26 13:27:39
+@@ -707,6 +707,11 @@ case ${target} in
+         macos_maj=11
+         def_ld64=609.0
+         ;;
++      *-*-darwin22*)
++        # Darwin 22 corresponds to macOS 13.
++        macos_maj=13
++        def_ld64=609.0
++        ;;
+       *-*-darwin)
+         case ${cpu_type} in
+           aarch64) macos_maj=11 ;;
+@@ -1870,7 +1875,7 @@ hppa[12]*-*-hpux11*)
+ 		dwarf2=no
+ 	fi
+ 	;;
+-i[34567]86-*-darwin1[89]*)
++i[34567]86-*-darwin1[89]* | i[34567]86-*-darwin2*)
+ 	echo "Error: 32bit target is not supported after Darwin17" 1>&2
+ 	;;
+ i[34567]86-*-darwin*)
+@@ -1880,7 +1885,7 @@ i[34567]86-*-darwin*)
+ 	tmake_file="${tmake_file} ${cpu_type}/t-darwin32-biarch t-slibgcc"
+ 	tm_file="${tm_file} ${cpu_type}/darwin32-biarch.h"
+ 	;;
+-x86_64-*-darwin1[89]* | x86_64-*-darwin2[01]*)
++x86_64-*-darwin1[89]* | x86_64-*-darwin2*)
+ 	# Only 64b from now
+ 	with_cpu=${with_cpu:-core2}
+ 	tmake_file="${tmake_file} t-slibgcc"
