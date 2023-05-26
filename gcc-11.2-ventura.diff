@@ -1,6 +1,6 @@
 diff --color -pur gcc-11.2.0/gcc/config/darwin-driver.c gcc-11.2.0-patched/gcc/config/darwin-driver.c
 --- gcc-11.2.0/gcc/config/darwin-driver.c       2021-07-28 08:55:07
-+++ gcc-11.2.0-patched/gcc/config/darwin-driver.c       2023-05-25 20:37:22
++++ gcc-11.2.0-patched/gcc/config/darwin-driver.c       2023-05-26 13:22:26
 @@ -64,7 +64,7 @@ validate_macosx_version_min (const char *version_str)
 
    major = strtoul (version_str, &end, 10);
@@ -11,23 +11,21 @@ diff --color -pur gcc-11.2.0/gcc/config/darwin-driver.c gcc-11.2.0-patched/gcc/c
 
    /* Skip a separating period, if there's one.  */
 diff --color -pur gcc-11.2.0/gcc/config.gcc gcc-11.2.0-patched/gcc/config.gcc
-
 --- gcc-11.2.0/gcc/config.gcc   2021-07-28 08:55:07
-+++ gcc-11.2.0-patched/gcc/config.gcc   2023-05-25 22:06:47
-@@ -702,9 +702,9 @@ case ${target} in
-       *-*-darwin[4-9]* | *-*-darwin1[0-9]*)
-         macos_min=`expr $darwin_maj - 4`
++++ gcc-11.2.0-patched/gcc/config.gcc   2023-05-26 13:27:39
+@@ -707,6 +707,11 @@ case ${target} in
+         macos_maj=11
+         def_ld64=609.0
          ;;
--      *-*-darwin20*)
--        # Darwin 20 corresponds to macOS 11.
--        macos_maj=11
 +      *-*-darwin22*)
 +        # Darwin 22 corresponds to macOS 13.
 +        macos_maj=13
-         def_ld64=609.0
-         ;;
++        def_ld64=609.0
++        ;;
        *-*-darwin)
-@@ -1870,7 +1870,7 @@ hppa[12]*-*-hpux11*)
+         case ${cpu_type} in
+           aarch64) macos_maj=11 ;;
+@@ -1870,7 +1875,7 @@ hppa[12]*-*-hpux11*)
                 dwarf2=no
         fi
         ;;
@@ -36,7 +34,7 @@ diff --color -pur gcc-11.2.0/gcc/config.gcc gcc-11.2.0-patched/gcc/config.gcc
         echo "Error: 32bit target is not supported after Darwin17" 1>&2
         ;;
  i[34567]86-*-darwin*)
-@@ -1880,7 +1880,7 @@ i[34567]86-*-darwin*)
+@@ -1880,7 +1885,7 @@ i[34567]86-*-darwin*)
         tmake_file="${tmake_file} ${cpu_type}/t-darwin32-biarch t-slibgcc"
         tm_file="${tm_file} ${cpu_type}/darwin32-biarch.h"
         ;;
